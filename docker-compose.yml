@@ -1,0 +1,33 @@
+version: "3"
+services:
+  backup:
+    build: .
+    volumes:
+      - ./test/target:/target
+      - ./test/scratch:/scratch
+      - ./app:/app
+    environment:
+      RUNTIME: "0640"
+      DIRS_TO_BACKUP: /target
+      TMP_STORAGE: /scratch
+      MYSQL_SERVICES: mysql
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+      S3_BUCKET: TBD
+      STACK_NAME: test-stack
+      AWS_ACCESS_KEY_ID: TBD
+      AWS_SECRET_ACCESS_KEY: TBD
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:5.7
+    ports:
+      - "3306:3306"
+    volumes:
+      - /var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: data
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password

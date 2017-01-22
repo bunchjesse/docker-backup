@@ -1,0 +1,3 @@
+.DS_Store
+test/scratch/*
+!test/scratch/.gitkeep
